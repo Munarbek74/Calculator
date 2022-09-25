@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class DataReader {
 
@@ -11,11 +9,12 @@ public class DataReader {
     private char operation;
     private boolean exitFlag;
     private char exitCharacter;
-    private char resultChar;
+    private int arabSimvol;
+
 
     public DataReader(char exitCharacter) {
         this.exitCharacter = exitCharacter;
-        this.resultChar = '=';
+
     }
 
 
@@ -24,7 +23,7 @@ public class DataReader {
         Integer[] arabic = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
         String[] roman = {"X", "IX", "VIII", "VII", "VI", "V", "IV", "III", "II", "I"};
 
-        System.out.println("0 дон  10 го чейин (мисал 2+2=) же I ден X га чейин (I+IV=) деп жазыныз:\nЭгерде программадан чыккыныз келсе анда ! -знакты киргизин ");
+        System.out.println("0 дон  10 го чейин (мисал 2+2) же I ден X га чейин (I+IV) деп жазыныз:\nЭгерде программадан чыккыныз келсе анда ! -знакты киргизин ");
         Scanner scanner = new Scanner(System.in);
         String text = scanner.nextLine();
         if (text.indexOf(exitCharacter) != -1) {
@@ -33,11 +32,8 @@ public class DataReader {
         }
 
         try {
-            if ((text.charAt(text.length() - 1) != resultChar)) {
-                throw new RuntimeException();
-            }
 
-            text = text.substring(0, text.length() - 1);
+            text = text.substring(0, text.length() );
             String[] blocks = text.split("[+-/*]");
 
 
@@ -45,6 +41,7 @@ public class DataReader {
             for (int i = 0; i < roman.length; i++){
 
                 if ((roman[i].equals(blocks[0]) || (roman[i].equals(blocks[1])))) {
+                   this.arabSimvol = 1;
                     flag = true;
                     break;
                 }}
@@ -108,5 +105,9 @@ public class DataReader {
 
     public boolean isExitFlag() {
         return exitFlag;
+    }
+
+    public int getArabSimvol() {
+        return arabSimvol;
     }
 }
